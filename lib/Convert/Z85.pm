@@ -44,9 +44,7 @@ sub decode_z85 {
   my $len = length $txt;
   croak "Expected Z85 text in 5 byte chunks; got length $len" if $len % 5;
 
-  my $chunks = $len / 5;
   my @values;
-
   for my $idx (grep {; not($_ % 5) } 0 .. $len) {
     my ($val, $cnt) = (0, 0);
 
@@ -62,6 +60,7 @@ sub decode_z85 {
     push @values, $val;
   }
 
+  my $chunks = $len / 5;
   pack "(N)$chunks", @values
 }
 
