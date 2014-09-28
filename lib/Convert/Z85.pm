@@ -50,8 +50,8 @@ sub decode_z85 {
 
     for my $offset (@offsets) {
       my $chr = substr $txt, ($idx + $cnt), 1;
-      last if ord($chr) == 0;
-      confess "Invalid Z85 input; '$chr' not recognized"
+      last unless length $chr;
+      croak "Invalid Z85 input; '$chr' not recognized"
         unless exists $intforchr{$chr};
       $val += $intforchr{$chr} * $offset;
       ++$cnt;
