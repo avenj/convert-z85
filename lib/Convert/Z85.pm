@@ -42,20 +42,23 @@ sub encode_z85 {
 sub decode_z85 {
   my $txt = shift;
   my $len = length $txt;
-  croak "Expected Z85 text in 5 char chunks; got length $len" if $len % 5;
+  croak "Expected Z85 text in 5 byte chunks; got length $len" if $len % 5;
 
   my $chunks = $len / 5;
   my @values;
 
   for my $idx (grep {; not($_ % 5) } 0 .. $len) {
-    my $val = 0;
-    my $cnt = 0;
+    my ($val, $cnt) = (0, 0);
+
     for my $offset (@offsets) {
       my $chr = substr $txt, ($idx + $cnt), 1;
       last if ord($chr) == 0;
+      confess "Invalid Z85 input; '$chr' not recognized"
+        unless exists $intforchr{$chr};
       $val += $intforchr{$chr} * $offset;
       ++$cnt;
     }
+
     push @values, $val;
   }
 
@@ -67,5 +70,40 @@ sub decode_z85 {
 
 =pod
 
+=head1 NAME
+
+Convert::Z85 - Encode and decode Z85 strings
+
+=head1 SYNOPSIS
+
+  use Convert::Z85;
+
+  my $encoded = encode_z85($data);
+  my $decoded = decode_z85($encoded);
+
+=head1 DESCRIPTION
+
+An implementation of the I<Z85> encoding scheme (as described in
+L<ZeroMQ spec 32|http://rfc.zeromq.org/spec:32>) for encoding binary data as
+plain text.
+
+Modelled on the L<PyZMQ|http://zeromq.github.io/pyzmq/> implementation.
+
+=head2 encode_z85
+
+  encode_z85($data);
+
+Takes binary data (in 4-byte chunks padded with trailing zero bytes if
+necessary) and returns a Z85-encoded text string.
+
+=head2 decode_z85
+
+  decode_z85($encoded);
+
+Takes a Z85 text string and returns the original binary data.
+
+=head1 AUTHOR
+
+Jon Portnoy <avenj@cobaltirc.org>
 
 =cut
