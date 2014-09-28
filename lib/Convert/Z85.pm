@@ -89,6 +89,9 @@ plain text.
 
 Modelled on the L<PyZMQ|http://zeromq.github.io/pyzmq/> implementation.
 
+This module uses L<Exporter::Tiny> to export two functions by default:
+L</encode_z85> and L</decode_z85>.
+
 =head2 encode_z85
 
   encode_z85($data);
@@ -101,6 +104,10 @@ necessary) and returns a Z85-encoded text string.
   decode_z85($encoded);
 
 Takes a Z85 text string and returns the original binary data.
+
+=head1 SEE ALSO
+
+L<Convert::Ascii85>
 
 =head1 AUTHOR
 
