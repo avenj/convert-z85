@@ -17,6 +17,9 @@ plain text.
 
 Modelled on the [PyZMQ](http://zeromq.github.io/pyzmq/) implementation.
 
+This module uses [Exporter::Tiny](https://metacpan.org/pod/Exporter::Tiny) to export two functions by default:
+["encode\_z85"](#encode_z85) and ["decode\_z85"](#decode_z85).
+
 ## encode\_z85
 
     encode_z85($data);
@@ -29,6 +32,10 @@ necessary) and returns a Z85-encoded text string.
     decode_z85($encoded);
 
 Takes a Z85 text string and returns the original binary data.
+
+# SEE ALSO
+
+[Convert::Ascii85](https://metacpan.org/pod/Convert::Ascii85)
 
 # AUTHOR
 
