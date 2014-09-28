@@ -77,7 +77,7 @@ Convert::Z85 - Encode and decode Z85 strings
 
   use Convert::Z85;
 
-  my $encoded = encode_z85($data);
+  my $encoded = encode_z85($binarydata);
   my $decoded = decode_z85($encoded);
 
 =head1 DESCRIPTION
@@ -89,7 +89,8 @@ plain text.
 Modelled on the L<PyZMQ|http://zeromq.github.io/pyzmq/> implementation.
 
 This module uses L<Exporter::Tiny> to export two functions by default:
-L</encode_z85> and L</decode_z85>.
+L</encode_z85> and L</decode_z85>. L<Exporter::Tiny> provides flexible import
+options; look there for details.
 
 =head2 encode_z85
 
@@ -98,11 +99,15 @@ L</encode_z85> and L</decode_z85>.
 Takes binary data (in 4-byte chunks padded with trailing zero bytes if
 necessary) and returns a Z85-encoded text string.
 
+Padding is left up to the application, per the spec.
+
 =head2 decode_z85
 
   decode_z85($encoded);
 
 Takes a Z85 text string and returns the original binary data.
+
+Throws a stack trace if invalid data is encountered.
 
 =head1 SEE ALSO
 
