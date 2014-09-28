@@ -108,6 +108,10 @@ Takes a Z85 text string and returns the original binary data.
 
 L<Convert::Ascii85>
 
+L<POEx::ZMQ>
+
+L<ZMQ::FFI>
+
 =head1 AUTHOR
 
 Jon Portnoy <avenj@cobaltirc.org>
