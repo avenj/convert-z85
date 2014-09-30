@@ -31,9 +31,7 @@ sub encode_z85 {
   
   my $str;
   for my $val (@values) {
-    for my $offset (@offsets) {
-      $str .= $chrs[ ( int($val / $offset) ) % 85 ]
-    }
+    $str .= $chrs[ ( int( $val / $_ ) ) % 85 ] for @offsets;
   }
   
   $str
