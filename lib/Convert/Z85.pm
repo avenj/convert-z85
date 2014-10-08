@@ -19,7 +19,7 @@ my @chrs = split '',
 
 my %intforchr = map {; $chrs[$_] => $_ } 0 .. $#chrs;
 
-my @offsets = reverse map {; 85 ** $_ } 0 .. 4;
+my @multiples = reverse map {; 85 ** $_ } 0 .. 4;
 
 sub encode_z85 {
   my $bin = shift;
@@ -31,7 +31,7 @@ sub encode_z85 {
   
   my $str;
   for my $val (@values) {
-    $str .= $chrs[ ( int( $val / $_ ) ) % 85 ] for @offsets;
+    $str .= $chrs[ ( int($val / $_) ) % 85 ] for @multiples;
   }
   
   $str
@@ -46,12 +46,12 @@ sub decode_z85 {
   for my $idx (grep {; not($_ % 5) } 0 .. $len) {
     my ($val, $cnt) = (0, 0);
 
-    for my $offset (@offsets) {
+    for my $mult (@multiples) {
       my $chr = substr $txt, ($idx + $cnt), 1;
       last unless length $chr;
       croak "Invalid Z85 input; '$chr' not recognized"
         unless exists $intforchr{$chr};
-      $val += $intforchr{$chr} * $offset;
+      $val += $intforchr{$chr} * $mult;
       ++$cnt;
     }
 
