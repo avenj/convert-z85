@@ -22,8 +22,13 @@ my %intforchr = map {; $chrs[$_] => $_ } 0 .. $#chrs;
 my @multiples = reverse map {; 85 ** $_ } 0 .. 4;
 
 sub encode_z85 {
-  my $bin = shift;
+  my ($bin, %param) = @_;
+
   my $len = bytes::length($bin);
+  if ($param{pad}) {
+    $bin .= "\0" x (-$len % 4);
+    $len = bytes::length($bin);
+  }
   croak "Expected data padded to 4-byte chunks; got length $len" if $len % 4;
 
   my $chunks = $len / 4;
@@ -38,8 +43,9 @@ sub encode_z85 {
 }
 
 sub decode_z85 {
-  my $txt = shift;
+  my ($txt, %param) = @_;
   my $len = length $txt;
+
   croak "Expected Z85 text in 5 byte chunks; got length $len" if $len % 5;
 
   my @values;
@@ -59,7 +65,9 @@ sub decode_z85 {
   }
 
   my $chunks = $len / 5;
-  pack "(N)$chunks", @values
+  my $ret = pack "(N)$chunks", @values;
+  $ret =~ s/\0{0,3}$// if $param{pad};
+  $ret
 }
 
 
@@ -92,20 +100,27 @@ options; look there for details.
 
 =head2 encode_z85
 
-  encode_z85($data);
+  my $z85 = encode_z85($data);
 
-Takes binary data (in 4-byte chunks padded with trailing zero bytes if
-necessary) and returns a Z85-encoded text string.
+Takes binary data in 4-byte chunks and returns a Z85-encoded text string.
 
-Padding is left up to the application, per the spec.
+Per the spec, padding is not performed automatically; the B<pad> option can be
+specified to pad data with trailing zero bytes:
+
+  my $z85 = encode_z85($data, pad => 1);
 
 =head2 decode_z85
 
-  decode_z85($encoded);
+  my $bin = decode_z85($encoded);
 
 Takes a Z85 text string and returns the original binary data.
 
 Throws a stack trace if invalid data is encountered.
+
+Per the spec, removing padding is not performed automatically; the B<pad>
+option can be specified to remove trailing zero bytes:
+
+  my $bin = decode_z85($encoded, pad => 1);
 
 =head1 SEE ALSO
 
