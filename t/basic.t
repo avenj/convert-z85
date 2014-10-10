@@ -36,19 +36,25 @@ use Convert::Z85;
 # Pad with trailing zeros
 { require bytes;
   my $bin = "\x2B" x 6;
+
   eval {; encode_z85($bin) };
   like $@, qr/4-byte/, 'bad length encode w/ defaults dies';
+
   my $str = encode_z85($bin, pad => 1);
   my $rtripped = decode_z85($str, pad => 1);
   cmp_ok $rtripped, 'eq', $bin, 'roundtripped padded ok'
     or diag explain +{ rtrip => length($rtripped), bin => length($bin) };
 }
 
-# Preserve zeros here
 {
   my $bin = "\0" x 4;
   cmp_ok decode_z85( encode_z85 $bin ), 'eq', $bin,
     'roundtripped with zeros ok';
+}
+
+{
+  eval {; decode_z85('abc') };
+  like $@, qr/5-byte/, 'bad length decode dies';
 }
 
 done_testing
