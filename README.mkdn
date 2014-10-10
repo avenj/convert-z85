@@ -18,25 +18,31 @@ plain text.
 Modelled on the [PyZMQ](http://zeromq.github.io/pyzmq/) implementation.
 
 This module uses [Exporter::Tiny](https://metacpan.org/pod/Exporter::Tiny) to export two functions by default:
-["encode\_z85"](#encode_z85) and ["decode\_z85"](#decode_z85). [Exporter::Tiny](https://metacpan.org/pod/Exporter::Tiny) provides flexible import
-options; look there for details.
+["encode\_z85"](#encode_z85) and ["decode\_z85"](#decode_z85).
 
 ## encode\_z85
 
-    encode_z85($data);
+    my $z85 = encode_z85($data);
 
-Takes binary data (in 4-byte chunks padded with trailing zero bytes if
-necessary) and returns a Z85-encoded text string.
+Takes binary data in 4-byte chunks and returns a Z85-encoded text string.
 
-Padding is left up to the application, per the spec.
+Per the spec, padding is not performed automatically; the **pad** option can be
+specified to pad data with trailing zero bytes:
+
+    my $z85 = encode_z85($data, pad => 1);
 
 ## decode\_z85
 
-    decode_z85($encoded);
+    my $bin = decode_z85($encoded);
 
 Takes a Z85 text string and returns the original binary data.
 
 Throws a stack trace if invalid data is encountered.
+
+Per the spec, removing padding is not performed automatically; the **pad**
+option can be specified to remove trailing zero bytes:
+
+    my $bin = decode_z85($encoded, pad => 1);
 
 # SEE ALSO
 

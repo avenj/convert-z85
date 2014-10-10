@@ -1,5 +1,11 @@
 Revision history for Perl module Convert-Z85
 
+0.002001 2014-10-10
+
+  - Add 'pad => 1' encode/decode option for padding with zeros
+
+  - Return empty strings if passed same
+
 0.001002 2014-09-28
 
   - Explicitly require parent.pm
