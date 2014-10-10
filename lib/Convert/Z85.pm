@@ -24,7 +24,7 @@ my @multiples = reverse map {; 85 ** $_ } 0 .. 4;
 sub encode_z85 {
   my ($bin, %param) = @_;
 
-  my $len = bytes::length($bin);
+  my $len = bytes::length($bin) || return '';
   if ($param{pad}) {
     $bin .= "\0" x (-$len % 4);
     $len = bytes::length($bin);
@@ -44,9 +44,9 @@ sub encode_z85 {
 
 sub decode_z85 {
   my ($txt, %param) = @_;
-  my $len = length $txt;
+  my $len = length $txt || return '';
 
-  croak "Expected Z85 text in 5 byte chunks; got length $len" if $len % 5;
+  croak "Expected Z85 text in 5-byte chunks; got length $len" if $len % 5;
 
   my @values;
   for my $idx (grep {; not($_ % 5) } 0 .. $len) {
@@ -95,8 +95,7 @@ plain text.
 Modelled on the L<PyZMQ|http://zeromq.github.io/pyzmq/> implementation.
 
 This module uses L<Exporter::Tiny> to export two functions by default:
-L</encode_z85> and L</decode_z85>. L<Exporter::Tiny> provides flexible import
-options; look there for details.
+L</encode_z85> and L</decode_z85>.
 
 =head2 encode_z85
 
