@@ -1,7 +1,7 @@
 package Convert::Z85;
 
 use Carp;
-use strictures 1;
+use strict; use warnings FATAL => 'all';
 
 use parent 'Exporter::Tiny';
 our @EXPORT = our @EXPORT_OK = qw/
