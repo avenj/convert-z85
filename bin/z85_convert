@@ -1,0 +1,51 @@
+#!perl
+
+use strict; use warnings FATAL => 'all';
+
+use Convert::Z85;
+
+use Getopt::Long;
+my $do_decode = 0;
+my $file;
+GetOptions(
+  decode  => \$do_decode,
+  file    => \$file,
+);
+
+my $input = do { local $/; $file ? <$file> : <STDIN> };
+chomp $input;
+if ($do_decode) {
+  print decode_z85($input, pad => 1), "\n"
+} else {
+  print encode_z85($input, pad => 1), "\n"
+}
+
+=pod
+
+=head1 NAME
+
+z85_convert - Command line interface to Convert::Z85
+
+=head1 SYNOPSIS
+
+  # Encode Z85 from file:
+  sh$ z85_convert FILE
+
+  # Decode Z85 from file:
+  sh$ z85_convert --decode FILE
+  
+  # Encode Z85 from STDIN:
+  sh$ cat FILE | z85_convert
+
+=head1 DESCRIPTION
+
+A trivial command line interface to the Z85 encoding, as implemented by
+L<Convert::Z85>.
+
+Padding is applied automatically.
+
+=head1 AUTHOR
+
+Jon Portnoy <avenj@cobaltirc.org>
+
+=cut
