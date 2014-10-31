@@ -10,13 +10,13 @@ use Getopt::Long;
 my $do_decode = 0;
 my $file;
 GetOptions(
-  decode  => \$do_decode,
-  file    => \$file,
+  decode    => \$do_decode,
+  'file=s'  => \$file,
 );
 
 my $input;
 if ($file) {
-  open my $fh, '<:encoding(raw)', $file or die $!;
+  open my $fh, $file or die $!;
   $input = do { local $/; <$fh> };
   close $fh or warn $!;
 } else {
@@ -25,10 +25,10 @@ if ($file) {
 
 if ($do_decode) {
   # accept extraneous newlines in z85 stream ->
-  print decode_z85(join('', split /\n/, $input), pad => 1), "\n"
+  print decode_z85(join('', split /\n/, $input), pad => 1)
 } else {
   chomp $input;
-  print encode_z85($input, pad => 1), "\n"
+  print encode_z85($input, pad => 1)
 }
 
 =pod
@@ -54,6 +54,20 @@ A trivial command line interface to the Z85 encoding, as implemented by
 L<Convert::Z85>.
 
 Padding is applied automatically.
+
+A trailing newline is not printed.
+
+=head1 OPTIONS
+
+=head2 decode
+
+Decode, rather than encode, the given input.
+
+=head2 file
+
+A file path to encode or L</decode>.
+
+If none is specified, C<STDIN> is taken as input instead.
 
 =head1 AUTHOR
 
