@@ -4,6 +4,8 @@ use strict; use warnings FATAL => 'all';
 
 use Convert::Z85;
 
+## FIXME wrap option?
+
 use Getopt::Long;
 my $do_decode = 0;
 my $file;
@@ -12,11 +14,20 @@ GetOptions(
   file    => \$file,
 );
 
-my $input = do { local $/; $file ? <$file> : <STDIN> };
-chomp $input;
-if ($do_decode) {
-  print decode_z85($input, pad => 1), "\n"
+my $input;
+if ($file) {
+  open my $fh, '<:encoding(raw)', $file or die $!;
+  $input = do { local $/; <$fh> };
+  close $fh or warn $!;
 } else {
+  $input = do { local $/; <STDIN> };
+}
+
+if ($do_decode) {
+  # accept extraneous newlines in z85 stream ->
+  print decode_z85(join('', split /\n/, $input), pad => 1), "\n"
+} else {
+  chomp $input;
   print encode_z85($input, pad => 1), "\n"
 }
 
