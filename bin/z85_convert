@@ -10,6 +10,15 @@ use Getopt::Long;
 my $do_decode = 0;
 my $file;
 GetOptions(
+  help      => sub {
+    print
+      "z85_convert - encode or decode data or Z85 text\n\n",
+      "  --file=FILE    Retrieve input from FILE (rather than STDIN)\n",
+      "  --decode       Decode Z85 text (rather than encoding data)\n",
+    ;
+    exit 0
+  },
+
   decode    => \$do_decode,
   'file=s'  => \$file,
 );
