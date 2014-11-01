@@ -97,8 +97,6 @@ Modelled on the L<PyZMQ|http://zeromq.github.io/pyzmq/> implementation.
 This module uses L<Exporter::Tiny> to export two functions by default:
 L</encode_z85> and L</decode_z85>.
 
-A shell frontend is also provided; see L<z85_convert>.
-
 =head2 encode_z85
 
   my $z85 = encode_z85($data);
