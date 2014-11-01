@@ -3,6 +3,9 @@ use strict; use warnings FATAL => 'all';
 
 use Convert::Z85;
 
+# FIXME shove test strings into some simple file format
+#  for sharing with cmd.t
+
 {
   my $bin = "\x86\x4F\xD2\x6F\xB5\x59\xF7\x5B";
   my $str = "HelloWorld";
