@@ -1,5 +1,11 @@
 Revision history for Perl module Convert-Z85
 
+0.003001 2014-11-01
+
+  - Add 'z85_convert' command line frontend
+
+  - Drop 'strictures' dependency
+
 0.002001 2014-10-10
 
   - Add 'pad => 1' encode/decode option for padding with zeros
