@@ -10,6 +10,14 @@ use Getopt::Long;
 my $do_decode = 0;
 my $file;
 GetOptions(
+  version   => sub {
+    print
+      "z85_convert - Convert::Z85 - ",
+      ($Convert::Z85::VERSION || '(git)'),
+      "\n"
+    ;
+    exit 0
+  },
   help      => sub {
     print
       "z85_convert - encode or decode data or Z85 text\n\n",
