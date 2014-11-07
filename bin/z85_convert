@@ -22,6 +22,7 @@ GetOptions(
   decode    => \$do_decode,
   'file=s'  => \$file,
 );
+$file = shift @ARGV unless $file;
 
 my $input;
 if ($file) {
@@ -49,10 +50,10 @@ z85_convert - Command line interface to Convert::Z85
 =head1 SYNOPSIS
 
   # Encode Z85 from file:
-  sh$ z85_convert FILE
+  sh$ z85_convert --file FILE
 
   # Decode Z85 from file:
-  sh$ z85_convert --decode FILE
+  sh$ z85_convert --decode --file FILE
   
   # Encode Z85 from STDIN:
   sh$ cat FILE | z85_convert
