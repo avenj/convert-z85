@@ -1,5 +1,11 @@
 Revision history for Perl module Convert-Z85
 
+0.003003 2014-11-13
+
+  - Fix z85_convert util to print trailing newline on encode
+
+  - Improved z85_convert tests
+
 0.003002 2014-11-06
 
   - Fix z85_convert util to pull file name from ARGV if --file option is
