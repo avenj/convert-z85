@@ -46,7 +46,7 @@ if ($do_decode) {
   print decode_z85(join('', split /\n/, $input), pad => 1)
 } else {
   chomp $input;
-  print encode_z85($input, pad => 1)
+  print encode_z85($input, pad => 1), "\n"
 }
 
 =pod
