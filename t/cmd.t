@@ -1,6 +1,8 @@
 use strict; use warnings FATAL => 'all';
 
 BEGIN {
+  # I don't know what the proper way to make piped open happy on Windows is,
+  # and I don't have machines to test on. Patches welcome:
   if ($^O eq 'MSWin32') {
     require Test::More;
     Test::More::plan(skip_all =>
