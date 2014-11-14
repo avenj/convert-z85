@@ -1,8 +1,16 @@
-use Test::More;
 use strict; use warnings FATAL => 'all';
 
-use Capture::Tiny 'capture';
+BEGIN {
+  if ($^O eq 'MSWin32') {
+    require Test::More;
+    Test::More::plan(skip_all =>
+      'Skipping cmd tests because we are RUNNING_IN_HELL'
+    );
+  }
+}
 
+use Test::More;
+use Capture::Tiny 'capture';
 
 open my $origfh, '<', 'Changes' or die $!;
 my $changes = do { local $/; <$origfh> };
