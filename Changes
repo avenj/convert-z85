@@ -1,5 +1,9 @@
 Revision history for Perl module Convert-Z85
 
+0.004002 2014-11-14
+
+  - "Fix" Windows test failures
+
 0.004001 2014-11-13
 
   - Add '--wrap' option to z85_convert
