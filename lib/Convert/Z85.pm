@@ -36,7 +36,7 @@ sub encode_z85 {
   
   my $str;
   for my $val (@values) {
-    $str .= $chrs[ ( int($val / $_) ) % 85 ] for @multiples;
+    $str .= $chrs[ int($val / $_) % 85 ] for @multiples;
   }
   
   $str
