@@ -23,6 +23,7 @@ if ($^O ne 'VMS') {
 
 open my $origfh, '<', 'Changes' or die $!;
 my $changes = do { local $/; <$origfh> };
+chomp $changes;
 close $origfh or warn $!;
 
 
@@ -59,7 +60,7 @@ close $origfh or warn $!;
   };
   ok !$r_err, 'no stderr on stdin decode';
 
-  chomp $raw; chomp $changes;
+  chomp $raw;
   cmp_ok $raw, 'eq', $changes, 'roundtripped ok';
 }
 
@@ -77,7 +78,7 @@ close $origfh or warn $!;
     close $fh or warn $!;
   };
 
-  chomp $raw; chomp $changes;
+  chomp $raw;
   cmp_ok $raw, 'eq', $changes, 'roundtripped with --wrap ok';
 }
 
