@@ -114,10 +114,10 @@ specified to pad data with trailing zero bytes:
 
 Takes a Z85 text string and returns the original binary data.
 
-Throws a stack trace if invalid data is encountered.
+Dies (with a stack trace) if invalid data is encountered.
 
-Per the spec, padding is not handled automatically; the B<pad>
-option can be specified to remove trailing zero bytes:
+Padding (see L</encode_z85>) is not handled automatically; the B<pad> option
+can be specified to remove trailing zero bytes:
 
   my $bin = decode_z85($encoded, pad => 1);
 
