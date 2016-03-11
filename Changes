@@ -1,5 +1,11 @@
 Revision history for Perl module Convert-Z85
 
+1.001001 2016-03-10
+
+  - Use $Config{perlpath} (rather than $^X) for tests
+
+  - Documentation tweaks and other minor cleanups
+
 0.004002 2014-11-14
 
   - "Fix" Windows test failures
